@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Expose port (documentary)
-EXPOSE 8000
+# Expose port (Cloud Run defaults to 8080)
+EXPOSE 8080
 
-# Default command (overridden by compose)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Default command
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
