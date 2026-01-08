@@ -17,5 +17,6 @@ COPY . .
 # Expose port (Cloud Run defaults to 8080)
 EXPOSE 8080
 
-# Default command
+CMD ["python","manage.py","makemigrations"]
+CMD ["python","manage.py","migrate"]
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
