@@ -2,7 +2,7 @@ from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import SignupSerializer, OTPVerifySerializer, UserSerializer
+from .serializers import SignupSerializer, OTPVerifySerializer, UserSerializer, ReviewerCreationSerializer
 from .utils import send_otp_email
 from .models import User
 from django.utils import timezone
@@ -60,6 +60,26 @@ class OTPVerifyView(APIView):
         user.save()
         
         return Response({"message": "Account verified successfully. You can now login."}, status=status.HTTP_200_OK)
+
+class ReviewerCreateView(generics.CreateAPIView):
+    """
+    Endpoint for creating Reviewer accounts.
+    Publicly accessible. Reviewers are auto-activated.
+    """
+    queryset = User.objects.all()
+    serializer_class = ReviewerCreationSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+             "message": "Reviewer account created successfully.",
+             "id": user.id,
+             "email": user.email,
+             "role": user.role
+        }, status=status.HTTP_201_CREATED)
 
 class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserSerializer

@@ -21,6 +21,8 @@ DEBUG = str(os.getenv('DEBUG', 'False')).lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://memory-backend-997244455862.europe-west1.run.app').split(',')
+
 
 # Application definition
 
