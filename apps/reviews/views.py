@@ -3,11 +3,12 @@ from apps.artifacts.models import Artifact
 from apps.artifacts.serializers import ArtifactSerializer
 from .permissions import IsReviewer
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import IsAuthenticated
 
 class ReviewQueueView(generics.ListAPIView):
     queryset = Artifact.objects.filter(status=Artifact.Status.PENDING)
     serializer_class = ArtifactSerializer
-    permission_classes = [IsReviewer]
+    permission_classes = [IsAuthenticated,IsReviewer]
 
 class ApproveArtifactView(views.APIView):
     permission_classes = [IsReviewer]

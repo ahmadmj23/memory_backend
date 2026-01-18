@@ -7,3 +7,5 @@ Pillow
 python-dotenv
 markdown
 django-filter
+python-dotenv
+psycopg2-binary
